@@ -1,7 +1,6 @@
 package com.hei.school.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,8 +11,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class HazavaoService {
 
-    @Value("${openai.api.key}")
-    private String apiKey;
+    private String apiKey = "api_key";
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
