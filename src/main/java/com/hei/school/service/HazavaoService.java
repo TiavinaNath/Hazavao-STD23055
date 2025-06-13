@@ -10,34 +10,34 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class HazavaoService {
-    private String apiKey = System.getenv("OPENAI_API_KEY");
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
-    public String getDefinitionInMalagasy(String word) {
-        RestTemplate restTemplate = new RestTemplate();
+  private final String apiKey = System.getenv("OPENAI_API_KEY");
+  private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
-        Map<String, Object> message = new HashMap<>();
-        message.put("role", "user");
-        message.put("content", "Hazavao amin'ny teny malagasy tsotra ny teny : " + word);
+  public String getDefinitionInMalagasy(String word) {
+    RestTemplate restTemplate = new RestTemplate();
 
-        Map<String, Object> request = new HashMap<>();
-        request.put("model", "gpt-3.5-turbo");
-        request.put("messages", List.of(message));
+    Map<String, Object> message = new HashMap<>();
+    message.put("role", "user");
+    message.put("content", "Hazavao amin'ny teny malagasy tsotra ny teny : " + word);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(apiKey);
+    Map<String, Object> request = new HashMap<>();
+    request.put("model", "gpt-3.5-turbo");
+    request.put("messages", List.of(message));
 
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.setBearerAuth(apiKey);
 
-        ResponseEntity<Map> response = restTemplate.postForEntity(API_URL, entity, Map.class);
+    HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
+    ResponseEntity<Map> response = restTemplate.postForEntity(API_URL, entity, Map.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
-            Map<String, Object> messageResponse = (Map<String, Object>) choices.get(0).get("message");
-            return (String) messageResponse.get("content");
-        } else {
-            return "Tsy afaka mahazo valiny amin'izao fotoana izao.";
-        }
+    if (response.getStatusCode().is2xxSuccessful()) {
+      List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+      Map<String, Object> messageResponse = (Map<String, Object>) choices.get(0).get("message");
+      return (String) messageResponse.get("content");
+    } else {
+      return "Tsy afaka mahazo valiny amin'izao fotoana izao.";
     }
+  }
 }
