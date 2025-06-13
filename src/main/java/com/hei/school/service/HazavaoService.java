@@ -11,7 +11,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class HazavaoService {
 
-    private String apiKey = "api_key";
+    private String apiKey = System.getenv("OPENAI_API_KEY");
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
