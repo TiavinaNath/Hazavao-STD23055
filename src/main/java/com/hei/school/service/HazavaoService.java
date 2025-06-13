@@ -10,9 +10,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class HazavaoService {
-
     private String apiKey = System.getenv("OPENAI_API_KEY");
-
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
     public String getDefinitionInMalagasy(String word) {
